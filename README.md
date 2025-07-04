@@ -1,9 +1,4 @@
-# Repository Overview
-This is a comprehensive personal knowledge management repository focused on software engineering, study materials, and project documentation. 
-The repository serves as a living knowledge base covering various technology stacks, architectural patterns, development methodologies, and practical guides.
-
-
-# ドキュメント作成のアーキテクチャ
+## Introduction
 テキストベースのファイルで指示や成果物を管理することでAI Agentが非同期でタスクを実行できるように設計する.
 人が可読,編集な可能な`markdownファイル`を用いることで一人による介入を容易なものとする．
 
@@ -66,3 +61,26 @@ graph TD
 
 
 ```
+
+## Execute Methods
+下記を `GEMINI.md `のような 基底コンテキストファイルに入れる．
+`ClaudeCode` の場合は カスタムシュラッシュを作ると快適．
+
+GEMINI.md
+```md
+## shortcut prompts
+下記のワードが宣言された時は、対応するプロンプトを実行してください。
+
+- **mktickets**: `@WORKS/TASKS/ticketの発行作業.md の内容を理解し、考えて実行してください。`
+- **mkreport** : `@WORKS/TASKS/記事の作成作業.md の内容を理解し、考えて実行してください。`
+- **fixreport**: `@WORKS/TASKS/ドキュメントの作成作業.md の内容を理解し、考えて実行してください。`
+```
+
+## 運用
+
+1. 何か思いついたらアイディアをメモっておく
+1. 無知の場合は`idea.md`にざっくりした指示をして ticketファイルを生成してもらう
+1. ある程度書かせたいものが決まっている場合は 自分で ticketファイルを生成する
+1. 実行する．AIはチケットを消費して，ドキュメントをどんどん作る．
+1. 確認して，修正してほしい場合は </TODO> を埋め込み FIXにドキュメントを移し，修正を依頼する
+
