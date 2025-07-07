@@ -1,22 +1,21 @@
 ## Introduction
-テキストベースのファイルで指示や成果物を管理することでAI Agentが非同期でタスクを実行できるように設計する.
-人が可読,編集な可能な`markdownファイル`を用いることで一人による介入を容易なものとする．
+This system is designed to allow AI Agents to execute tasks asynchronously by managing instructions and deliverables in text-based files. By using human-readable and editable `markdown files`, it facilitates easy human intervention.
 
 ## Abstraction and Definition
-ドキュメント作成のタスクを抽象化する
-AI Agent に任せることができると予想
+Abstracting the task of document creation.
+Expected to be handled by AI Agents.
 
-1. human_task: アイディアから内を書くかを想起する．(人間)
-1. ticket_task: 想起した内容からどのうなドキュメントを作るか考慮
-1. research_task: 形式にのっとって調査し成果物としてドキュメントを生成
-1. human_fix_task: 成果物を確認し修正指示
-1. fix_task: 完成した成果物の校正を繰り返し，完成度を上げる
+1. human_task: Recall what to write from an idea. (Human)
+1. ticket_task: Consider what kind of document to create based on the recalled content.
+1. research_task: Research and generate the document as a deliverable according to the format.
+1. human_fix_task: Review the deliverable and provide correction instructions.
+1. fix_task: Repeatedly proofread the completed deliverable to improve its quality.
 
-- アイディア : idea.md
-- 作業指示ファイル : ticket.md
-- 成果物 : report.md
+- Idea: idea.md
+- Work instruction file: ticket.md
+- Deliverable: report.md
 
-## Architecture of Documents Making  System
+## Architecture of Documents Making System
 
 ```mermaid
 graph TD
@@ -63,24 +62,24 @@ graph TD
 ```
 
 ## Execute Methods
-下記を `GEMINI.md `のような 基底コンテキストファイルに入れる．
-`ClaudeCode` の場合は カスタムシュラッシュを作ると快適．
+Add the following to a base context file such as `GEMINI.md`.
+For `ClaudeCode`, creating a custom slash command is convenient.
 
 GEMINI.md
 ```md
 ## shortcut prompts
-下記のワードが宣言された時は、対応するプロンプトを実行してください。
+When the following words are declared, execute the corresponding prompt.
 
-- **mktickets**: `@WORKS/TASKS/ticketの発行作業.md の内容を理解し、考えて実行してください。`
-- **mkreport** : `@WORKS/TASKS/記事の作成作業.md の内容を理解し、考えて実行してください。`
-- **fixreport**: `@WORKS/TASKS/ドキュメントの作成作業.md の内容を理解し、考えて実行してください。`
+- **mktickets**: `Understand and execute the contents of @WORKS/TASKS/ticketの発行作業.md.`
+- **mkreport** : `Understand and execute the contents of @WORKS/TASKS/記事の作成作業.md.`
+- **fixreport**: `Understand and execute the contents of @WORKS/TASKS/ドキュメントの作成作業.md.`
 ```
 
-## 運用
+## Operation
 
-1. 何か思いついたらアイディアをメモっておく
-1. 無知の場合は`idea.md`にざっくりした指示をして ticketファイルを生成してもらう
-1. ある程度書かせたいものが決まっている場合は 自分で ticketファイルを生成する
-1. 実行する．AIはチケットを消費して，ドキュメントをどんどん作る．
-1. 確認して，修正してほしい場合は </TODO> を埋め込み FIXにドキュメントを移し，修正を依頼する
+1. Whenever you come up with an idea, jot it down.
+1. If you are unsure, give rough instructions in `idea.md` and have a ticket file generated.
+1. If you already know what you want to write, create the ticket file yourself.
+1. Execute. The AI consumes tickets and keeps generating documents.
+1. If you want corrections, embed </TODO> and move the document to FIX to request revisions.
 
