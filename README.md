@@ -24,7 +24,7 @@ This project introduces a document creation system based on **Ticket AI-Driven D
 6.  Review the document. If corrections are needed, embed `<TODO>Correction details</TODO>` and move the document to the `@WORKS/FIX` directory.
 7.  Execute the **/fixreport** command.
 
-## Abstract
+# Abstract
 
 This system is designed to allow AI agents to execute tasks asynchronously by managing instructions and deliverables in text files. Using human-readable and editable Markdown files facilitates individual intervention.
 
