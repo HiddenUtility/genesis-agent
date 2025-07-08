@@ -1,42 +1,44 @@
-## Introduction
-テキストベースのファイルで指示や成果物を管理することでAI Agentが非同期でタスクを実行できるように設計する.
-人が可読,編集な可能な`markdownファイル`を用いることで一人による介入を容易なものとする．
+# ドキュメント作成システムのアーキテクチャを作ってみる
+
+\*\*チケットAI駆動開発（仮称）\*\*を基に、**ClaudeCode**や**GeminiCLI**をはじめとするCLIの**エージェント型AI**を用いたドキュメント作成システムを制作しました。
+
+
+## Quick Start
+
+1.  何か思いついたら [@WORKS/idea.md](/WORKS/idea.md) にメモしておきます。
+2.  知識がない場合は [@WORKS/idea.md](/WORKS/idea.md) に に大まかな指示を記述し、**mktickets**　コマンドでチケットファイルを生成してもらいます。
+3.  ある程度書きたい内容が決まっている場合は、自分で　@WORKS/TICKETS　にチケットファイルを生成します。
+4.  **mkreport**　コマンドを実行します。AIはチケットを消費して、ドキュメントを次々と作成します。
+5.  ドキュメントを確認し、修正が必要な場合は`<TODO>修正内容</TODO>`を埋め込み、@WORKS/FIX ディレクトリにドキュメントを移動させて修正を依頼します。
+
+
+## Abstract
+
+テキストファイルで指示や成果物を管理することで、AIエージェントが非同期でタスクを実行できるように設計します。人が可読・編集可能なMarkdownファイルを用いることで、個人の介入を容易にします。
 
 ## Abstraction and Definition
-ドキュメント作成のタスクを抽象化する
-AI Agent に任せることができると予想
 
-1. human_task: アイディアから内を書くかを想起する．(人間)
-1. ticket_task: 想起した内容からどのうなドキュメントを作るか考慮
-1. research_task: 形式にのっとって調査し成果物としてドキュメントを生成
-1. human_fix_task: 成果物を確認し修正指示
-1. fix_task: 完成した成果物の校正を繰り返し，完成度を上げる
+AIエージェントに任せられると予想されるタスクは以下の通りです。
 
-- アイディア : idea.md
-- 作業指示ファイル : ticket.md
-- 成果物 : report.md
+1.  **Human Task**: アイデアから内容を想起する（人間）。
+2.  **Ticket Task**: 想起した内容から、どのようなドキュメントを作成するか検討する。
+3.  **Research Task**: 定められた形式に沿って調査し、成果物としてドキュメントを生成する。
+4.  **Human Fix Task**: 成果物を確認し、修正を指示する。
+5.  **Fix Task**: 完成した成果物の校正を繰り返し行い、完成度を高める。
 
-## Architecture of Documents Making  System
+<!-- end list -->
+
+  * **アイデア**: idea.md
+  * **作業指示ファイル**: ticket.md
+  * **成果物**: report.md
+
+## Architecture of Documents Making System
 
 ```mermaid
 graph TD
-
     subgraph human
       human_task["Instruct task"]
       human_fix_task["Fix task"]
-
-    end
-
-    subgraph files
-        idea[/"idea.md"/]
-        ticket[/"TICKET.md"/]
-        report[/"REPORT.md"/]
-    end
-
-    subgraph repositories
-        ticket_dir[("TICKETS")]
-        report_dir[("REPORTS")]
-        fix_dir[("FIX")]
     end
 
     subgraph AI Agent
@@ -45,42 +47,60 @@ graph TD
         fix_task
     end
     
-    human_task --"make ticket"--> ticket
+    subgraph repositories
+        idea[/"idea.md"/]
+
+        subgraph ticket_dir["TICKETS"]
+            ticket_0[/"TICKET.md"/]
+        end
+
+        subgraph ticket_comp_dir["TICKETS_COMP"]
+            ticket_1[/"TICKET.md"/]
+        end
+
+        subgraph report_dir["REPORTS"]
+            report_1[/"REPORT.md"/]
+        end
+
+        subgraph fix_dir["FIX"]
+            report_2[/"REPORT.md"/]
+        end
+    end
+
+    human_task --"make ticket" --> ticket_dir
     human_task --"recollection"--> idea
     human_fix_task --"request for correction"--> fix_dir
     report_dir --"confirm files"--> human_fix_task
     idea --"in"--> ticket_task
-    ticket_task --"out"--> ticket
-    ticket --"move"--> ticket_dir
+    ticket_task --"out"--> ticket_dir
     ticket_dir --"in"--> research_task
-    research_task --"out"--> report
-    report --"move"--> report_dir
+    ticket_dir --"move"--> ticket_comp_dir
+    research_task --"out"--> report_dir
     fix_task --"out"--> report_dir
-    fix_dir --"in"--> fix_task
-
-
-
+    fix_dir --"in"--> fix_task 
 ```
+
+## 設計のポイント
+
+  * チケット発行作業と実行作業を分けることで、人が確認・介入できるようにします。
+  * チケット発行は、人でもエージェントでも行うことが可能です。
+  * 使用したチケットを残しておくことで、再利用性を高めます。
+  * チケットを残しておくことで、プロンプトの精度を確認し、改善できます。
+  * 修正作業は成果物ファイル内で個別に指示できるようにし、プロンプトは簡略化します。
+  * 実行時にプロンプトを記述する必要がないようにします。
 
 ## Execute Methods
-下記を `GEMINI.md `のような 基底コンテキストファイルに入れる．
-`ClaudeCode` の場合は カスタムシュラッシュを作ると快適．
+
+下記を `GEMINI.md` のような基底コンテキストファイルに入れます。
+**ClaudeCode**の場合は下記を実行するカスタムシュラッシュを作ると快適です。
 
 GEMINI.md
+
 ```md
-## shortcut prompts
-下記のワードが宣言された時は、対応するプロンプトを実行してください。
+### shortcut prompts
+下記のワードが宣言された場合、対応するプロンプトを実行してください。
 
-- **mktickets**: `@WORKS/TASKS/ticketの発行作業.md の内容を理解し、考えて実行してください。`
-- **mkreport** : `@WORKS/TASKS/記事の作成作業.md の内容を理解し、考えて実行してください。`
-- **fixreport**: `@WORKS/TASKS/ドキュメントの作成作業.md の内容を理解し、考えて実行してください。`
+- **mktickets**: `Understand and execute the contents of @WORKS/TASKS/ticketの発行作業.md.`
+- **mkreport**: `Understand and execute the contents of @WORKS/TASKS/記事の作成作業.md.`
+- **fixreport**: `Understand and execute the contents of @WORKS/TASKS/ドキュメントの作成作業.md.`
 ```
-
-## 運用
-
-1. 何か思いついたらアイディアをメモっておく
-1. 無知の場合は`idea.md`にざっくりした指示をして ticketファイルを生成してもらう
-1. ある程度書かせたいものが決まっている場合は 自分で ticketファイルを生成する
-1. 実行する．AIはチケットを消費して，ドキュメントをどんどん作る．
-1. 確認して，修正してほしい場合は </TODO> を埋め込み FIXにドキュメントを移し，修正を依頼する
-
