@@ -1,1 +1,1 @@
-@WORKS/TASKS/ドキュメントの改修作業.md の内容を理解し、考えて実行してください．
+@WORKS/TASKS/fix_document.md の内容を理解し、考えて実行してください．

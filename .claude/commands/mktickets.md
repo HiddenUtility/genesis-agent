@@ -1,1 +1,1 @@
-@WORKS/TASKS/ticketの発行作業.md の内容を理解し、考えて実行してください。
+@WORKS/TASKS/issue_ticket.md の内容を理解し、考えて実行してください。

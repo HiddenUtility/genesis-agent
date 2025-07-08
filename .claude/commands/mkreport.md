@@ -1,1 +1,1 @@
-@WORKS/TASKS/ドキュメントの作成作業.md の内容を理解し、考えて実行してください。
+@WORKS/TASKS/create_document.md の内容を理解し、考えて実行してください。

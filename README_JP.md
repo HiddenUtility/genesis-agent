@@ -109,7 +109,7 @@ GEMINI.md
 ### shortcut prompts
 下記のワードが宣言された場合、対応するプロンプトを実行してください。
 
-- **mktickets**: `Understand and execute the contents of @WORKS/TASKS/ticketの発行作業.md.`
-- **mkreport**: `Understand and execute the contents of @WORKS/TASKS/記事の作成作業.md.`
-- **fixreport**: `Understand and execute the contents of @WORKS/TASKS/ドキュメントの作成作業.md.`
+- **mktickets**: `Understand and execute the contents of @WORKS/TASKS/issue_ticket.md.`
+- **mkreport**: `Understand and execute the contents of @WORKS/TASKS/create_document.md.`
+- **fixreport**: `Understand and execute the contents of @WORKS/TASKS/fix_document.md.`
 ```
