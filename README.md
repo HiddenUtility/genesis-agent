@@ -6,8 +6,8 @@ This project introduces a document creation system based on **Ticket AI-Driven D
 
 ## For GeminiCLI
 
-1.  If you have an idea, jot it down in `[@WORKS/idea.md](/WORKS/idea.md)`.
-2.  If you lack knowledge on a topic, write a general instruction in `[@WORKS/idea.md](/WORKS/idea.md)`.
+1.  If you have an idea, jot it down in [@WORKS/idea.md](/WORKS/idea.md).
+2.  If you lack knowledge on a topic, write a general instruction in [@WORKS/idea.md](/WORKS/idea.md).
 3.  Type **mktickets** in your terminal to generate a ticket file.
 4.  If you have a clear idea of the content, you can create a ticket file yourself in `@WORKS/TICKETS`.
 5.  Type **mkreport** in your terminal to execute article creation. The AI will consume tickets and create documents sequentially.
@@ -16,8 +16,8 @@ This project introduces a document creation system based on **Ticket AI-Driven D
 
 ## For ClaudeCode
 
-1.  If you have an idea, jot it down in `[@WORKS/idea.md](/WORKS/idea.md)`.
-2.  If you lack knowledge on a topic, write a general instruction in `[@WORKS/idea.md](/WORKS/idea.md)`.
+1.  If you have an idea, jot it down in [@WORKS/idea.md](/WORKS/idea.md).
+2.  If you lack knowledge on a topic, write a general instruction in [@WORKS/idea.md](/WORKS/idea.md).
 3.  Use the **/mktickets** command to generate a ticket file.
 4.  If you have a clear idea of the content, you can create a ticket file yourself in `@WORKS/TICKETS`.
 5.  Execute the **/mkreport** command. The AI will consume tickets and create documents sequentially.
