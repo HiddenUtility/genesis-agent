@@ -1,10 +1,5 @@
-# About this
-
-作業が完了したファイルを確認するために，ファイルパスをここに記述します．
-
-
-# 作業完了一覧
+# Working Logs
 
 | filename           | file_link   | timestamp | description                                    |
 |----------------|------------|----------|-----------------------------------------|
-|   ticket.md     | [path](ticket.md)      | 2025-6-26       | ネット検索し記事を作成しました．            |
+|   ticket.md     | [path](ticket.md)      | 2025-6-26       | Online research was conducted, and an article was created.           |

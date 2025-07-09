@@ -1,82 +1,65 @@
-# Architecture of a Document Creation System
-
-This project introduces a document creation system based on **Ticket AI-Driven Development (tentative name)**, utilizing CLI-based agent AI such as **ClaudeCode** and **GeminiCLI**.
-
+# Document Creation System Using AI Agents
+Based on **Ticket AI Driven Development (Tentative)**, we have developed a document creation system using **agent-type AI** in CLIs such as **ClaudeCode** and **GeminiCLI**.
+[日本語](README_JP.md)
 # Quick Start
-
 ## For GeminiCLI
-
-1.  If you have an idea, jot it down in [@WORKS/idea.md](/WORKS/idea.md).
-2.  If you lack knowledge on a topic, write a general instruction in [@WORKS/idea.md](/WORKS/idea.md).
-3.  Type **mktickets** in your terminal to generate a ticket file.
-4.  If you have a clear idea of the content, you can create a ticket file yourself in `@WORKS/TICKETS`.
-5.  Type **mkreport** in your terminal to execute article creation. The AI will consume tickets and create documents sequentially.
-6.  Review the document. If corrections are needed, embed `<TODO>Correction details</TODO>` and move the document to the `@WORKS/FIX` directory.
-7.  Type **fixreport** in your terminal to execute the correction task.
-
+1. Whenever you have an idea, make a note in [@WORKS/idea.md](/WORKS/idea.md).
+2. If you lack knowledge, you can also write a rough instruction in [@WORKS/idea.md](/WORKS/idea.md).
+3. Type **mktickets** in the terminal to generate ticket files.
+4. If you have a general idea of what you want to write, you may generate ticket files in @WORKS/TICKETS yourself.
+5. Type **mkreport** in the terminal to execute article creation. The AI will consume tickets and create documents one after another.
+6. Review the documents, and if revisions are needed, embed `<TODO>revisions</TODO>` and move the documents to the @WORKS/FIX directory.
+7. Type **fixreport** in the terminal to execute article creation.
 ## For ClaudeCode
-
-1.  If you have an idea, jot it down in [@WORKS/idea.md](/WORKS/idea.md).
-2.  If you lack knowledge on a topic, write a general instruction in [@WORKS/idea.md](/WORKS/idea.md).
-3.  Use the **/mktickets** command to generate a ticket file.
-4.  If you have a clear idea of the content, you can create a ticket file yourself in `@WORKS/TICKETS`.
-5.  Execute the **/mkreport** command. The AI will consume tickets and create documents sequentially.
-6.  Review the document. If corrections are needed, embed `<TODO>Correction details</TODO>` and move the document to the `@WORKS/FIX` directory.
-7.  Execute the **/fixreport** command.
+1. Whenever you have an idea, make a note in [@WORKS/idea.md](/WORKS/idea.md).
+2. If you lack knowledge, you can also write a rough instruction in [@WORKS/idea.md](/WORKS/idea.md).
+3. Use the **/mktickets** command to generate ticket files.
+4. If you have a general idea of what you want to write, you may generate ticket files in @WORKS/TICKETS yourself.
+5. Execute the **/mkreport** command. The AI will consume tickets and create documents one after another.
+6. Review the documents, and if revisions are needed, embed `<TODO>revisions</TODO>` and move the documents to the @WORKS/FIX directory.
+7. Execute the **/fixreport** command.
 
 # Abstract
-
-This system is designed to allow AI agents to execute tasks asynchronously by managing instructions and deliverables in text files. Using human-readable and editable Markdown files facilitates individual intervention.
-
+By managing instructions and deliverables with text files, the system is designed for humans and AI agents to execute tasks asynchronously.
 ## Abstraction and Definition
-
-The tasks expected to be handled by the AI agent are as follows:
-
-1.  **Human Task**: Conceive content from an idea (Human).
-2.  **Ticket Task**: Consider what kind of document to create based on the conceived content.
-3.  **Research Task**: Investigate according to a defined format and generate a document as a deliverable.
-4.  **Human Fix Task**: Review the deliverable and instruct corrections.
-5.  **Fix Task**: Repeatedly proofread the completed deliverable to improve its quality.
-
-*   **Idea**: idea.md
-*   **Work Instruction File**: ticket.md
-*   **Deliverable**: report.md
-
-## Architecture of Documents Making System
-
+The tasks that can be expected to be handled by AI agents are as follows:
+1. **Human Task**: Recall content from ideas (human).
+2. **Ticket Task**: Consider what kind of document to create from the recalled content.
+3. **Research Task**: Conduct research according to a specified format and generate documents as deliverables.
+4. **Human Fix Task**: Review deliverables and issue correction instructions.
+5. **Fix Task**: Continuously proofread the completed deliverables to enhance quality.
+<!-- end list -->
+  * **Ideas**: idea.md
+  * **Work Instruction Files**: ticket.md
+  * **Deliverables**: report.md
+## Architecture of Document Making System
 ```mermaid
 graph TD
     subgraph human
       human_task["Instruct task"]
       human_fix_task["Fix task"]
     end
-
-    subgraph "AI Agent"
+    subgraph AI Agent
         ticket_task
         research_task
         fix_task
     end
-    
+  
     subgraph repositories
-        idea[/idea.md/]
-
+        idea[/"idea.md"/]
         subgraph ticket_dir["TICKETS"]
-            ticket_0[/TICKET.md/]
+            ticket_0[/"TICKET.md"/]
         end
-
         subgraph ticket_comp_dir["TICKETS_COMP"]
-            ticket_1[/TICKET.md/]
+            ticket_1[/"TICKET.md"/]
         end
-
         subgraph report_dir["REPORTS"]
-            report_1[/REPORT.md/]
+            report_1[/"REPORT.md"/]
         end
-
         subgraph fix_dir["FIX"]
-            report_2[/REPORT.md/]
+            report_2[/"REPORT.md"/]
         end
     end
-
     human_task --"make ticket" --> ticket_dir
     human_task --"recollection"--> idea
     human_fix_task --"request for correction"--> fix_dir
@@ -89,30 +72,27 @@ graph TD
     fix_task --"out"--> report_dir
     fix_dir --"in"--> fix_task 
 ```
-
 ## Design Points
+  * The prompts allow asynchronous task execution between AI agents and humans through markdown files.
+  * By separating ticket issuance and execution tasks, human review and intervention are possible.
+  * Ticket issuance can be performed by either humans or agents.
+  * Retaining the used tickets enhances reusability.
+  * Retaining the used tickets allows for checking and improving the accuracy of prompts.
+  * The revision work can be instructed individually within the deliverable files, simplifying prompt input to the terminal.
+  * It eliminates the need to write prompts to the terminal during execution.
 
-*   Separating ticket issuance and execution allows for human confirmation and intervention.
-*   Tickets can be issued by either humans or agents.
-*   Keeping used tickets enhances reusability.
-*   Keeping tickets allows for checking and improving the accuracy of prompts.
-*   Correction tasks can be individually instructed within the deliverable file, simplifying the prompt.
-*   Eliminates the need to write prompts at the time of execution.
-
-## Execute Methods
-
-Add the following to a base context file like `GEMINI.md`.
-For **ClaudeCode**, creating a custom slash command to execute the following is convenient.
-
-GEMINI.md
-
-```md
-### shortcut prompts
-When the following words are declared, execute the corresponding prompt.
-
-- **mktickets**: `Understand and execute the contents of @WORKS/TASKS/issue_ticket.md.`
-- **mkreport**: `Understand and execute the contents of @WORKS/TASKS/create_document.md.`
-- **fixreport**: `Understand and execute the contents of @WORKS/TASKS/fix_document.md.`
-```
-
-@WORK/TASKSのファイル名を英語に変更し、変更に合わせて　@README.md, @README.md, @.claude の中のファイルのパスを修正しておいて 
+# FAQ
+## Is it okay to add a template for the ticket file?
+1. You can create your own ticket file template in any location. A sample is available in @WORKS/TICKETS/_temp.
+2. Edit [issue_ticket.md](./WORKS/TASKS/issue_ticket.md) and provide a path to the ticket file you created.
+## How can I change the content of the ticket file template?
+1. Check the third line of [issue_ticket.md](./WORKS/TASKS/issue_ticket.md) to see which file is being referenced.
+2. Edit the referenced sample.md.
+## How can I add more types of tasks?
+1. Create your own task file template in any location. The default location is @WORKS/TICKETS.
+2. If you are using GeminiCLI, edit [GEMINI.md](GEMINI.md) to set up shortcuts for executing the task files.
+3. If you are using ClaudeCode, create a custom slash command to execute the task file in `.claude/commands`.
+## How can I adjust the contents of a task?
+1. Edit the relevant task file located in @WORKS/TICKETS.
+2. If you change the task file name and are using GeminiCLI, edit [GEMINI.md](GEMINI.md).
+3. If you change the task file name and are using ClaudeCode, edit the custom slash command for the corresponding task in `.claude/commands`.

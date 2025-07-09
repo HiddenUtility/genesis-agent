@@ -1,1 +1,1 @@
-@WORKS/TASKS/fix_document.md の内容を理解し、考えて実行してください．
+Please understand the content of @WORKS/TASKS/fix_document.md, think about it, and execute it.
