@@ -21,48 +21,8 @@ AI Agent に任せることができると予想
 - 作業指示ファイル : ticket.md
 - 成果物 : report.md
 
-## Architecture of Documents Making  System
-
-```mermaid
-graph TD
-
-    subgraph human
-      human_task["Instruct task"]
-      human_fix_task["Fix task"]
-
-    end
-
-    subgraph files
-        idea[/"idea.md"/]
-        ticket[/"TICKET.md"/]
-        report[/"REPORT.md"/]
-    end
-
-    subgraph repositories
-        ticket_dir[("TICKETS")]
-        report_dir[("REPORTS")]
-        fix_dir[("FIX")]
-    end
-
-    subgraph AI Agent
-        ticket_task
-        research_task
-        fix_task
-    end
-    
-    human_task --"make ticket"--> ticket
-    human_task --"recollection"--> idea
-    human_fix_task --"request for correction"--> fix_dir
-    report_dir --"confirm files"--> human_fix_task
-    idea --"in"--> ticket_task
-    ticket_task --"out"--> ticket
-    ticket --"move"--> ticket_dir
-    ticket_dir --"in"--> research_task
-    research_task --"out"--> report
-    report --"move"--> report_dir
-    fix_task --"out"--> report_dir
-    fix_dir --"in"--> fix_task
+## Architecture
+@README を参照のこと
 
 
 
-```

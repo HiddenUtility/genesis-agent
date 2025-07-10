@@ -1,0 +1,12 @@
+{
+    "files.autoGuessEncoding": true,
+    "cSpell.words": [
+    ],
+    "[markdown]": {
+        "editor.quickSuggestions": {
+            "comments": "on",
+            "strings": "on",
+            "other": "on"
+        },
+    }
+}

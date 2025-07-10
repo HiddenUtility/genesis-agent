@@ -8,5 +8,5 @@
 1. ファイルに下記の`<TODO>指示内容</TODO>`を発見した場合、タグの`指示内容`に従ってください。
 1. 作業が完了すれば`<TODO>指示内容</TODO>`の部分は削除してください．
 1. 修正したファイルを @WORKS/REPORTS へ移動させてくだださい．
-1. 修正したファイルの相対パスを [@WORKS/task_logs.md](../task_logs.md) 内の [作業完了一覧](../task_logs.md#作業完了一覧) の表に従って完了報告を上げてください．
+1. 修正したファイルの相対パスを [@WORKS/task_logs.md](../task_logs.md) 内の [Working Logs](../task_logs.md#working-logs) の表に従って完了報告を上げてください．
 
