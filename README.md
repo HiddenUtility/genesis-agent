@@ -68,7 +68,7 @@ We abstract the tasks that can be expected to be handled by AI agents:
 * **Ideas**: idea.md
 * **Work Instruction Files**: ticket.md
 * **Deliverables**: report.md
-## Architecture of Document Making System
+## Architecture of Documents Making System
 ```mermaid
 graph TD
     subgraph human
