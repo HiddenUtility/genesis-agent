@@ -1,6 +1,6 @@
-# Document Creation System Using AI Agents
+# Overview
 
-Based on **Ticket AI Driven Development (Tentative)**, we have developed a document creation system using **agent-type AI** in CLIs such as **ClaudeCode** and **GeminiCLI**.
+A system that allows you to create and modify documents using only natural language instructions with agent AI (**ClaudeCode** or **GeminiCLI**).
 
 [日本語](README_JP.md)
 
@@ -52,9 +52,7 @@ To use markdown snippets in VSCode, you need to edit `.vscode/settings.json`.
 }
 ```
 
-# Abstract
-
-We will build an environment where humans and AI agents can asynchronously execute tasks for generating documents used in business scenarios, such as web research reports and requirement specifications.
+# System Description
 
 ## Abstraction
 We abstract the tasks that can be expected to be handled by AI agents:
