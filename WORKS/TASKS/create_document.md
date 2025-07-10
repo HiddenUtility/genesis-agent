@@ -11,5 +11,5 @@
 1. ファイル内に指示がある場合はその指示に従ってください．
 1. レポートが完成したら @WORKS/REPORTS  へ適切なファイル名を考えてドキュメントを保存してください．
 1. タスクが完了したら該当の`markdownファイル`を @WORKS/TICKETS_COMP へ移動してください．
-1. 作成したファイルの相対パスを [@WORKS/task_logs.md](../task_logs.md) 内の [作業完了一覧](../task_logs.md#作業完了一覧) の表に従って完了報告を上げてください．
+1. 作成したファイルの相対パスを [@WORKS/task_logs.md](../task_logs.md) 内の [Working Logs](../task_logs.md#working-logs) の表に従って完了報告を上げてください．
 
