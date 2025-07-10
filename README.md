@@ -109,13 +109,14 @@ graph TD
     fix_dir --"in"--> fix_task 
 ```
 ## Design Points
-* AI agents and humans can asynchronously execute tasks by managing prompts through markdown files.
+* Enables asynchronous task execution between AI agents and humans through markdown file-based instruction and deliverable management.
+* Human-readable and editable `markdown files` make human intervention easy.
 * By separating ticket issuance and execution tasks, human review and intervention are possible.
 * Ticket issuance can be performed by either humans or agents.
-* Retaining the used tickets enhances reusability.
-* Retaining the used tickets allows for checking and improving the accuracy of prompts.
-* The revision work can be instructed individually within the deliverable files, simplifying prompt input to the terminal.
-* It eliminates the need to write prompts to the terminal during execution.
+* Retaining used tickets enhances reusability.
+* Retaining used tickets allows for checking and improving prompt accuracy.
+* Revision work can be instructed individually within deliverable files, simplifying terminal prompt input.
+* Eliminates the need to write prompts to the terminal during execution.
 
 # FAQ
 
